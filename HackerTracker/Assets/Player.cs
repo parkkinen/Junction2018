@@ -1,31 +1,60 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Player : MonoBehaviour {
-    protected float mDefaultWinInS = 120;
+    public enum Face {
+        Normal, Surprised, Stressed
+    };
 
-    private float mActionProgress = 0;
+    public GameObject PlayerPortrait;
+
+    protected float DefaultWinInS = 120;
+
+    private float ActionProgress = 0;
+
 
     public int SecondsLeftOnAction() {
-        return (int)(mDefaultWinInS - mDefaultWinInS * (mActionProgress / 100));
+        return (int)(DefaultWinInS - DefaultWinInS * (ActionProgress / 100));
     }
 
     public bool IsActionFinished() {
-        if (mActionProgress >= 100)
+        if (ActionProgress >= 100)
             return true;
         return false;
     }
 
     public void AddProgress(float progress) {
-        mActionProgress = progress;
+        ActionProgress = progress;
     }
 
     public float Progress() {
-        return mActionProgress;
+        return ActionProgress;
     }
 	
 	public void AddDurationProgress() {
-        mActionProgress += (100 / mDefaultWinInS) * Time.deltaTime;
+        ActionProgress += (100 / DefaultWinInS) * Time.deltaTime;
+    }
+
+    private float LastProgress = 0;
+
+    public void ProgressFace(float prog) {
+        if (prog >= 30 && prog < 70) {
+            if (LastProgress < 30) {
+                ChangeFace(Face.Surprised);
+                LastProgress = prog;
+            }
+        }
+        else if (prog >= 70) {
+            if (LastProgress < 70) {
+                ChangeFace(Face.Stressed);
+                LastProgress = prog;
+            }
+        }
+    }
+
+    public virtual void ChangeFace(Face face) {
+        Debug.Log("Unimplemented ChangeFace()");
     }
 }

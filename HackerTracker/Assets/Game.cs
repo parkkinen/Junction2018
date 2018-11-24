@@ -12,24 +12,16 @@ public class Game : MonoBehaviour {
 
     private Hacker HackerObj;
     private Itguy ItguyObj;
-
-    private GameObject HackerProgress;
-    private GameObject HackerProgressText;
-    private GameObject ItguyProgress;
-    private GameObject ItguyProgressText;
+    
 
     void GameLoop() {
         //Start by adding passive action progress to Hacker and Itguy
         HackerObj.AddDurationProgress();
         ItguyObj.AddDurationProgress();
-        //Draw changes to the UI progress bars
-        HackerProgress.transform.localScale = new Vector3((HackerObj.Progress() / 100) * 1, 1, 1);
-        Text text = HackerProgressText.GetComponent<Text>();
-        text.text = "Hack Completed in " + HackerObj.SecondsLeftOnAction() + " seconds!";
-        ItguyProgress.transform.localScale = new Vector3((ItguyObj.Progress() / 100) * 1, 1, 1);
-        text = ItguyProgressText.GetComponent<Text>();
-        text.text = "IP track finished in " + ItguyObj.SecondsLeftOnAction() + " seconds!";
-       //Check if either player has won
+        //Change Player faces based on the progress
+        HackerObj.ProgressFace(ItguyObj.Progress());
+        ItguyObj.ProgressFace(HackerObj.Progress());
+        //Check if either player has won
         if (HackerObj.IsActionFinished()) {
             Debug.Log("Hacker wins!");
             state = GameState.HackerWins;
@@ -45,10 +37,8 @@ public class Game : MonoBehaviour {
         state = GameState.Game;
         HackerObj = (Hacker)GameObject.Find("Hacker").GetComponent(typeof(Hacker));
         ItguyObj = (Itguy)GameObject.Find("Itguy").GetComponent(typeof(Itguy));
-        HackerProgress = GameObject.Find("HackerProgress");
-        ItguyProgress = GameObject.Find("ItguyProgress");
-        HackerProgressText = GameObject.Find("HackerProgressText");
-        ItguyProgressText = GameObject.Find("ItguyProgressText");
+        HackerObj.ChangeFace(Player.Face.Normal);
+        ItguyObj.ChangeFace(Player.Face.Normal);
     }
 	
 	// Update is called once per frame
@@ -61,9 +51,13 @@ public class Game : MonoBehaviour {
                 break;
             case GameState.HackerWins:
                 Debug.Log("Hacker Wins");
+                HackerObj.ChangeFace(Player.Face.Normal);
+                ItguyObj.ChangeFace(Player.Face.Surprised);
                 break;
             case GameState.ItguyWins:
                 Debug.Log("Itguy Wins");
+                HackerObj.ChangeFace(Player.Face.Surprised);
+                ItguyObj.ChangeFace(Player.Face.Normal);
                 break;
             default:
                 break;
