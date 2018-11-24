@@ -18,7 +18,7 @@ public class Hacker : Player {
 
     // Use this for initialization
     void Start () {
-        DefaultWinInS = 10;
+        DefaultWinInS = 120;
         ProgressMilestone = 10;
         PlayerProgress = GameObject.Find("HackerProgress");
         PlayerProgressText = GameObject.Find("HackerProgressText");
