@@ -6,4 +6,5 @@
 Our goal is to come and improve our own game making and programming skills.</p>
 
 <h2>Plan</h2>
-<p>No idea.</p>
+<h3>Hacker Tracker</h>
+<p>Our plan is to make competitive 1v1 game where the other players objective is to hack the It guy's computer and the It guy's objective is to stop him and track him.</p>
