@@ -9,8 +9,12 @@ public class Player : MonoBehaviour {
     };
 
     public GameObject PlayerPortrait;
+    public GameObject PlayerProgress;
+    public GameObject PlayerProgressText;
+    public  GameObject PlayerComment;
 
     protected float DefaultWinInS = 120;
+    protected float ProgressMilestone;
 
     private float ActionProgress = 0;
 
@@ -52,6 +56,10 @@ public class Player : MonoBehaviour {
                 LastProgress = prog;
             }
         }
+    }
+
+    public virtual void SendPassiveLine() {
+        Debug.Log("Unimplemented SendPassiveLine()");
     }
 
     public virtual void ChangeFace(Face face) {

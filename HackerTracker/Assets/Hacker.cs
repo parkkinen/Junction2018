@@ -4,35 +4,34 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class Hacker : Player {
-    private GameObject HackerProgress;
-    private GameObject HackerProgressText;
 
-    private float ProgressMilestone;
+    private hakeri Hakeri = new hakeri();
 
     //Sends passive reply if enough time has passed
-    void SendPassiveLine() {
+    public override void SendPassiveLine() {
         if (Progress() >= ProgressMilestone) {
-            //Send random line
-            Debug.Log("Random line Lmao");
+            Text text = PlayerComment.GetComponent<Text>();
+            text.text = Hakeri.ReturnLine(Random.Range(0, 32));
             ProgressMilestone += 10;
         }
     }
 
     // Use this for initialization
     void Start () {
-        DefaultWinInS = 120;
+        DefaultWinInS = 10;
         ProgressMilestone = 10;
-        HackerProgress = GameObject.Find("HackerProgress");
-        HackerProgressText = GameObject.Find("HackerProgressText");
+        PlayerProgress = GameObject.Find("HackerProgress");
+        PlayerProgressText = GameObject.Find("HackerProgressText");
         PlayerPortrait = GameObject.Find("HackerPortrait");
+        PlayerComment = GameObject.Find("HackerComment");
         ChangeFace(Face.Normal);
     }
 	
 	// Update is called once per frame
 	void Update () {
         //Draw changes to the UI progress bars
-        HackerProgress.transform.localScale = new Vector3((Progress() / 100) * 1, 1, 1);
-        Text text = HackerProgressText.GetComponent<Text>();
+        PlayerProgress.transform.localScale = new Vector3((Progress() / 100) * 1, 1, 1);
+        Text text = PlayerProgressText.GetComponent<Text>();
         text.text = "Hack Completed in " + SecondsLeftOnAction() + " seconds!";
         SendPassiveLine();
     }
