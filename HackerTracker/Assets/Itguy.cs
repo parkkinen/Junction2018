@@ -19,6 +19,7 @@ public class Itguy : Player {
     // Use this for initialization
     void Start () {
         DefaultWinInS = 120;
+        ProgressMilestone = 10;
         PlayerPortrait = GameObject.Find("ItguyPortrait");
         PlayerProgressText = GameObject.Find("ItguyProgressText");
         PlayerProgress = GameObject.Find("ItguyProgress");
